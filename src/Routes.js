@@ -14,6 +14,6 @@ export const publicRoutes = [
     },
     {
         path: PRODUCT_ROUTE,
-        page: CatalogPage
+        Page: CatalogPage
     }
 ]

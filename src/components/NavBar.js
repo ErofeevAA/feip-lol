@@ -132,7 +132,8 @@ const NavBar = observer(() => {
                     }
                 </Container>
             </Navbar>
-            <Dropdown.Divider/>
+
+            <Dropdown.Divider style={{background: 'gray', height:1}}/>
         </div>
     );
 });

@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import {Button, Card, Col} from "react-bootstrap";
-import Image from "react-bootstrap/Image";
-import star from '../assets/star.png'
 import {useNavigate} from "react-router-dom"
 import {PRODUCT_ROUTE} from "../utils/consts/RoutesConst";
 import {SYMBOL_RUBLE} from "../utils/consts/StringConsts";
@@ -16,8 +14,8 @@ const ProductItem = () => {
     }
     let itemStyle = {zIndex: 0}
     let content = (
-        <div className="d-flex flex-column">
-            <div onClick={itemClick} style={{backgroundImage: basket_img/*`url${product.picture}`*/, width: 288, height: 407}}></div>
+        <div className="d-flex flex-column m-3 p-3">
+            <div onClick={itemClick} style={{backgroundImage: `url(${basket_img})`, width: 288, height: 407}}></div>
             <div style={{height: 16}}/>
             <div onClick={itemClick} style={{color: "#515562", fontSize: 16}}>Water-repellent wool twill trench coat</div>
             <div style={{height: 24}}/>
@@ -30,7 +28,7 @@ const ProductItem = () => {
             <div className="d-flex flex-column" style={{margin: 16}}>
                 <div
                     onClick={itemClick}
-                    style={{cursor: 'pointer', backgroundImage: basket_img/*`url${product.picture}`*/, width: 288, height: 407}}></div>
+                    style={{cursor: 'pointer', backgroundImage: `url(${basket_img})`, width: 288, height: 407}}></div>
                 <div style={{height: 16}}/>
                 <div
                     onClick={itemClick}
