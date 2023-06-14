@@ -1,0 +1,2 @@
+export const COOKIES_BASKET = "COOKIES_BASKET";
+

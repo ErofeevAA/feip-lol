@@ -1,4 +1,11 @@
+html {
+  height: 100%;
+}
+
 body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +17,15 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.block_quantity {
+  box-sizing: border-box;
+  background: #FFFFFF;
+  border: 1px solid #CDCFD6;
+}
+
+.basket_page {
+  padding-top: 32px;
+  margin: 0 6vw 0 6vw;
 }
