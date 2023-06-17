@@ -8,7 +8,7 @@ const LoginPage = () => {
 
     return (
         <div className="d-flex justify-content-center align-items-center"
-             style={{background: '#fff', height: `60vh`}}>
+             style={{background: '#E5E5E5', height: `60vh`}}>
             <div
                 className="d-flex flex-column justify-content-between align-items-center"
                 style={{
