@@ -1,7 +1,4 @@
-import {gCookies} from "../index";
-import {COOKIES_BASKET} from "../utils/consts/CookiesConst";
 import BasketItem from "../components/BasketItem";
-import {useState} from "react";
 import React from "react";
 import BasketItemStore from "../store/BasketItemStore";
 import basket_img from "../assets/basket.svg";
@@ -34,11 +31,17 @@ const arr = [
 const BasketPage = () => {
     // const [items, setItems] = useState();
 
-    const items = arr.map((item) => {return <BasketItem item={item}/>})
+    let items = []
+
+    for (let i = 0; i < arr.length; ++i) {
+        items.push(<BasketItem item={arr[i]}/>);
+        items.push(<div style={{height: 1, background: '#CDCFD6', marginTop: 20, marginBottom: 20}}/>)
+    }
+    items.pop()
 
     return (
         <div className="d-flex justify-content-center flex-wrap"
-             style={{background: "#F7F7FC", paddingTop: 32, margin: `0 32px 0 32px`}}>
+             style={{background: "#F7F7FC", paddingTop: 32, paddingBottom: 32, margin: 32}}>
             <div className="d-flex flex-column">
                 {items}
             </div>
