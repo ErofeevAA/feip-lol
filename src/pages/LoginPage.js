@@ -1,13 +1,14 @@
-import React, {useState} from "react";
-import {Button, Form} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
-import {REGISTRATION_ROUTE} from "../utils/consts/RoutesConst";
+import React, {useContext, useState} from "react";
+import {Button} from "react-bootstrap";
+import {NavLink, useNavigate} from "react-router-dom";
+import {REGISTRATION_ROUTE, SHOP_ROUTE} from "../utils/consts/RoutesConst";
 import {login} from "../http/userAPI";
-import {getProducts} from "../http/productsAPI";
-import axios from "axios";
 import InputFormWithTitle from "../components/InputFormWithTitle";
+import {Context} from "../index";
 
 const LoginPage = () => {
+    const {user} = useContext(Context)
+    const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -15,23 +16,9 @@ const LoginPage = () => {
         try {
             let data
             data = await login(email, password)
-            console.log(data)
-        } catch (e) {
-            alert(e.response.data.message)
-        }
-
-    }
-
-    const click2 = async () => {
-        try {
-            let data2
-            // data2 = await getProducts()
-            data2 = await axios.get('http://localhost:8080/products')
-            // data2 = await fetch("http://localhost:8080/products")
-            // data2 = await fetch("https://reqres.in/api/products/3")
-            // data2 = await axios.get('https://reqres.in/api/products/3')
-
-            console.log(data2)
+            user.setUser(user)
+            user.setIsAuth(true)
+            navigate(SHOP_ROUTE)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -53,21 +40,16 @@ const LoginPage = () => {
                     boxShadow: `0 0 50px rgba(71, 73, 83, 0.3)`
             }}>
                 <div style={{color: '#323540', fontSize: 18, fontWeight: 700}}>Логин</div>
-                <InputFormWithTitle title="Логин"/>
                 <InputFormWithTitle
-                    title="Пароль"
-                    type="password"
-                />
-                <Form.Control
-                    placeholder="Введите ваш номер телефона"
+                    title="Логин"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
-                <Form.Control
+                <InputFormWithTitle
+                    title="Пароль"
                     type="password"
-                    placeholder="Введите пароль"
-                    value={password}
                     onChange={e => setPassword(e.target.value)}
+                    value={password}
                 />
                 <div className="d-flex flex-column">
                     <Button
@@ -75,12 +57,6 @@ const LoginPage = () => {
                         variant={"secondary"}
                         style={{width: `100%`}}>
                          Войти
-                    </Button>
-                    <Button
-                        onClick={click2}
-                        variant={"secondary"}
-                        style={{width: `100%`}}>
-                        data
                     </Button>
                     <div style={{height: 10}}/>
                     <div>Нет аккаунта? <NavLink to={REGISTRATION_ROUTE}>Зарегистрируйся!</NavLink></div>
