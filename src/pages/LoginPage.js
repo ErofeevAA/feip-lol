@@ -1,11 +1,29 @@
-
-import React from "react";
+import React, {useContext, useState} from "react";
 import {Button} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
-import {REGISTRATION_ROUTE} from "../utils/consts/RoutesConst";
+import {NavLink, useNavigate} from "react-router-dom";
+import {REGISTRATION_ROUTE, SHOP_ROUTE} from "../utils/consts/RoutesConst";
+import {login} from "../http/userAPI";
 import InputFormWithTitle from "../components/InputFormWithTitle";
+import {Context} from "../index";
 
 const LoginPage = () => {
+    const {user} = useContext(Context)
+    const navigate = useNavigate()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const click = async () => {
+        try {
+            let data
+            data = await login(email, password)
+            user.setUser(user)
+            user.setIsAuth(true)
+            navigate(SHOP_ROUTE)
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+
+    }
 
     return (
         <div className="d-flex justify-content-center align-items-center"
@@ -22,13 +40,20 @@ const LoginPage = () => {
                     boxShadow: `0 0 50px rgba(71, 73, 83, 0.3)`
             }}>
                 <div style={{color: '#323540', fontSize: 18, fontWeight: 700}}>Логин</div>
-                <InputFormWithTitle title="Логин"/>
+                <InputFormWithTitle
+                    title="Логин"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                />
                 <InputFormWithTitle
                     title="Пароль"
                     type="password"
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
                 />
                 <div className="d-flex flex-column">
                     <Button
+                        onClick={click}
                         variant={"secondary"}
                         style={{width: `100%`}}>
                          Войти

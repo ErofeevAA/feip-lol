@@ -1,13 +1,17 @@
-import React, {useContext} from 'react';
-import {Routes, Route, Navigate} from 'react-router-dom'
+import React, {useContext, useEffect, useState} from 'react';
+import {Routes, Route, Navigate, useNavigate} from 'react-router-dom'
 import {publicRoutes} from "../Routes";
 import {SHOP_ROUTE} from "../utils/consts/RoutesConst";
 import {Context} from "../index";
+import axios from "axios";
+
+
 
 const AppRouter = () => {
     const {user} = useContext(Context)
 
-    console.log(user)
+
+
     return (
         <Routes>
             {/*{user.isAuth && authRoutes.map(({path, Page}) =>*/}

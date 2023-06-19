@@ -28,7 +28,8 @@ const NavBar = observer(() => {
         setIsOpen(!isOpen);
     };
     const logOut = () => {
-        user.delUser()
+        user.setUser({})
+        user.setIsAuth(false)
     }
 
     return (

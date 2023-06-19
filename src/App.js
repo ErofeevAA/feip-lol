@@ -2,12 +2,28 @@ import logo from './logo.svg';
 import './App.css';
 import Footer from "./components/Footer";
 import {BrowserRouter} from "react-router-dom";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import NavBar from "./components/NavBar";
 import AppRouter from "./components/AppRouter";
+import {observer} from "mobx-react-lite";
+import {Context} from "./index";
+import {Spinner} from "react-bootstrap";
+import {refresh} from "./http/userAPI";
 
-function App() {
-    //const [user, setUser] = useState();
+const App = observer(() => {
+    const {user} = useContext(Context)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        refresh().then(data => {
+            user.setUser(true)
+            user.setIsAuth(true)
+        }).finally(() => setLoading(false))
+    }, [])
+
+    if (loading) {
+        return <Spinner animation={"grow"}/>
+    }
 
     return (
         <BrowserRouter>
@@ -18,7 +34,7 @@ function App() {
             </div>
         </BrowserRouter>
     );
-}
+})
 
 
 export default App;
