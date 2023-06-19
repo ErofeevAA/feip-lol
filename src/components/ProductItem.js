@@ -5,7 +5,7 @@ import {PRODUCT_ROUTE} from "../utils/consts/RoutesConst";
 import {SYMBOL_RUBLE} from "../utils/consts/StringConsts";
 import basket_img from "../assets/basket.svg";
 
-const ProductItem = () => {
+const ProductItem = ({products}) => {
     const navigate = useNavigate()
     const [over, overState] = useState(false)
 
@@ -21,7 +21,7 @@ const ProductItem = () => {
         sizeWidget.push(<SizeItem size={mock[i]} onClick={choose} chosen={i === numChosen}/>);
     }
 
-    const name = 'Water-repellent wool twill trench coat';
+    const name = products.name;
 
     const price = 17200;
 
