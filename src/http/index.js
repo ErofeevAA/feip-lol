@@ -1,7 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom"
-import {refresh} from "./userAPI";
-import {LOGIN_ROUTE} from "../utils/consts/RoutesConst";
 
 const url = 'http://localhost:8080/'
 
@@ -13,29 +10,51 @@ const $authHost = axios.create({
     baseURL: url
 })
 
-const authInterceptor = config => {
-    config.headers.authorization = `Bearer ${localStorage.getItem('accessToken')}`
-    return config
-}
+const refreshTokens = async () => {
+    try {
+        const {data} = await $authHost.post(
+            'auth/refresh',
+            {'refreshToken': localStorage.getItem('refreshToken')}
+        )
+        const accessToken = data['accessToken']
 
-$authHost.interceptors.request.use(authInterceptor)
+        localStorage.setItem('accessToken', data["accessToken"])
+        localStorage.setItem('refreshToken', data["refreshToken"])
 
-
-$authHost.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    (error) => {
-        if (error.response && error.response.status === 403) {
-
-        }
-        if (error.response && error.response.status === 401) {
-
-            // refresh()
-        }
-        return Promise.reject(error);
+        return accessToken;
+    } catch (error) {
+        // Обработка ошибки обновления токенов
+        console.error('Ошибка обновления токенов:', error);
+        throw error;
     }
-);
+};
+
+$authHost.interceptors.request.use(async (config) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (accessToken) {
+        config.headers['Authorization'] = `Bearer ${accessToken}`;
+    }
+
+    try {
+        return await config;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            try {
+                const newAccessToken = await refreshTokens();
+                config.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                return await config;
+            } catch (error) {
+                console.error('Ошибка обновления токенов:', error);
+                throw error;
+            }
+        } else {
+            console.error('Ошибка запроса:', error);
+            throw error;
+        }
+    }
+});
+
 
 
 
