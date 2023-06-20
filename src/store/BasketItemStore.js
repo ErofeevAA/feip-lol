@@ -1,3 +1,5 @@
+import {makeAutoObservable} from "mobx";
+
 export default class BasketItemStore {
     /**
      * @param {String} name
@@ -12,6 +14,7 @@ export default class BasketItemStore {
         this._quantity = quantity
         this._price = price
         this._picture = picture
+        makeAutoObservable(this)
     }
 
     get sum() {

@@ -3,8 +3,9 @@ import {getProductsByCategory} from "../http/productsAPI";
 import {Context} from "../index";
 import ProductsList from "../components/ProductsList";
 import {useLocation} from "react-router-dom";
+import {observer} from "mobx-react-lite";
 
-const CatalogPage = () => {
+const CatalogPage = observer(() => {
     let location = useLocation();
 
     const {products} = useContext(Context)
@@ -28,6 +29,6 @@ const CatalogPage = () => {
 
         </div>
     );
-}
+})
 
 export default CatalogPage;

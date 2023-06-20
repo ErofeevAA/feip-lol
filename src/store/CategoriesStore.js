@@ -1,7 +1,10 @@
+import {makeAutoObservable} from "mobx";
+
 class CategoriesStore {
 
     constructor() {
         this._categories = []
+        makeAutoObservable(this)
     }
 
     setCategories(categories) {
