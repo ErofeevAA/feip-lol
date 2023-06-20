@@ -1,4 +1,5 @@
 import axios from "axios";
+import {LOGIN_ROUTE} from "../utils/consts/RoutesConst";
 
 const url = 'http://localhost:8080/'
 
@@ -45,10 +46,12 @@ $authHost.interceptors.request.use(async (config) => {
                 config.headers['Authorization'] = `Bearer ${newAccessToken}`;
                 return await config;
             } catch (error) {
+                window.location.href = LOGIN_ROUTE
                 console.error('Ошибка обновления токенов:', error);
                 throw error;
             }
         } else {
+            window.location.href = LOGIN_ROUTE
             console.error('Ошибка запроса:', error);
             throw error;
         }

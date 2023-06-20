@@ -8,11 +8,11 @@ const ProductsList = () => {
     console.log(products)
 
     return (
-        <Row className="d-flex">
+        <div className="d-flex flex-wrap justify-content-center">
             {products.products.map(products =>
                 <ProductItem key={products.id} products={products}/>
             )}
-        </Row>
+        </div>
     );
 };
 

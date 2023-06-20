@@ -24,17 +24,7 @@ const CatalogPage = () => {
 
     return(
         <div className="d-flex justify-content-center flex-column mb-5">
-            <Container>
-                <div className="d-flex flex-wrap justify-content-center">
-                    <ProductsList/>
-                    {/*<ProductItem />*/}
-                    {/*<ProductItem />*/}
-                    {/*<ProductItem />*/}
-                    {/*<ProductItem />*/}
-                    {/*<ProductItem />*/}
-                    {/*<ProductItem />*/}
-                </div>
-            </Container>
+            <ProductsList/>
 
         </div>
     );
