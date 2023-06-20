@@ -11,12 +11,13 @@ const $authHost = axios.create({
     baseURL: url
 })
 
-const refreshTokens = async () => {
+export const refreshTokens = async () => {
     try {
         const {data} = await $authHost.post(
             'auth/refresh',
             {'refreshToken': localStorage.getItem('refreshToken')}
         )
+        console.log(data)
         const accessToken = data['accessToken']
 
         localStorage.setItem('accessToken', data["accessToken"])
@@ -24,6 +25,9 @@ const refreshTokens = async () => {
 
         return accessToken;
     } catch (error) {
+        if (error.response.statusCode === 401) {
+            window.location.href = LOGIN_ROUTE
+        }
         // Обработка ошибки обновления токенов
         console.error('Ошибка обновления токенов:', error);
         throw error;

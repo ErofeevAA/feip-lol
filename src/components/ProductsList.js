@@ -5,7 +5,7 @@ import ProductItem from "./ProductItem";
 
 const ProductsList = () => {
     const {products} = useContext(Context)
-    console.log(products)
+    // console.log(products)
 
     return (
         <div className="d-flex flex-wrap justify-content-center">

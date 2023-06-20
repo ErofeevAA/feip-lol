@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../index";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -18,19 +18,35 @@ import basket from '../assets/basket.svg'
 import Basket from "./Basket";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import {getProducts} from "../http/productsAPI";
+import {getCategories} from "../http/CategoriesAPI";
+import ProductItem from "./ProductItem";
+import CategoriesItem from "./CategoriesItem";
 
 const NavBar = observer(() => {
-    const {user} = useContext(Context)
+    const {user, categories} = useContext(Context)
     // const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
-
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+
+
     const logOut = () => {
         user.setUser({})
         user.setIsAuth(false)
     }
+
+
+    useEffect(() => {
+        getCategories().then(data => {
+            // console.log(data)
+            categories.setCategories(data)
+            // product.products.map(data => console.log(data.id))
+        })
+
+
+    }, [])
 
     return (
         <div>
@@ -89,71 +105,25 @@ const NavBar = observer(() => {
                                 >
                                     <Container>
                                         <Row >
-                                            <Col className='d-flex flex-column justify-content-around align-items-start'>
-                                                <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>
-                                                    Одежда
-                                                </NavbarBrand>
-                                                <Nav className='d-flex flex-column mt-3 align-items-start'>
-                                                    <NavLink to={PRODUCT_ROUTE} style={{color: "grey"}}>Юбки</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Джемперы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Джинсы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Брюки, шорты</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Футболки, топы, лонгсливы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Блузки, рубашки, туники</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Платья</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Толстовки</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Костюмы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Оверол</NavLink>
-                                                </Nav>
-                                            </Col>
-                                            <Col className='d-flex flex-column justify-content-around align-items-start'>
-                                                <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>
-                                                    Верхняя одежда
-                                                </NavbarBrand>
-                                                <Nav className='d-flex flex-column mt-3 align-items-start'>
-                                                    <NavLink to={PRODUCT_ROUTE} style={{color: "grey"}}>Юбки</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Джемперы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Джинсы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Брюки, шорты</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Футболки, топы, лонгсливы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Блузки, рубашки, туники</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Платья</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Толстовки</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Костюмы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Оверол</NavLink>
-                                                </Nav>
-                                            </Col>
-                                            <Col className='d-flex flex-column justify-content-around align-items-start'>
-                                                <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>
-                                                    Аксессуары
-                                                </NavbarBrand>
-                                                <Nav className='d-flex flex-column mt-3 align-items-start'>
-                                                    <NavLink to={PRODUCT_ROUTE} style={{color: "grey"}}>Юбки</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Джемперы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Джинсы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Брюки, шорты</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Футболки, топы, лонгсливы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Блузки, рубашки, туники</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Платья</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Толстовки</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Костюмы</NavLink>
-                                                    <NavLink to='/' style={{color: "grey"}}>Оверол</NavLink>
-                                                </Nav>
-                                            </Col>
-                                            <Col className='d-flex flex-column justify-content-around align-items-start'>
-                                                <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>
-                                                    Жакеты и пиджаки
-                                                </NavbarBrand>
-                                                <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>
-                                                    Обувь
-                                                </NavbarBrand>
-                                                <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>
-                                                    Сумки и кошельки
-                                                </NavbarBrand>
-                                                <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>
-                                                    Шапки, шляпы, шарфы
-                                                </NavbarBrand>
-                                            </Col>
+
+                                            {categories.categories.map(categories =>
+                                                <CategoriesItem key={categories.id} categories={categories}/>
+                                            )}
+
+                                            {/*<Col className='d-flex flex-column justify-content-around align-items-start'>*/}
+                                            {/*    <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>*/}
+                                            {/*        Жакеты и пиджаки*/}
+                                            {/*    </NavbarBrand>*/}
+                                            {/*    <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>*/}
+                                            {/*        Обувь*/}
+                                            {/*    </NavbarBrand>*/}
+                                            {/*    <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>*/}
+                                            {/*        Сумки и кошельки*/}
+                                            {/*    </NavbarBrand>*/}
+                                            {/*    <NavbarBrand className='text-dark fw-bold text-uppercase' style={{fontSize: 12}}>*/}
+                                            {/*        Шапки, шляпы, шарфы*/}
+                                            {/*    </NavbarBrand>*/}
+                                            {/*</Col>*/}
                                         </Row>
 
                                     </Container>

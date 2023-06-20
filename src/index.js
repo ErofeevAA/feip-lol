@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import UserStore from "./store/UserStore";
 import Cookies from 'universal-cookie';
 import productStore from "./store/ProductStore";
+import CategoriesStore from "./store/CategoriesStore";
 // import DeviceStore from "./store/DeviceStore";
 
 export const Context = createContext(null)
@@ -17,6 +18,7 @@ root.render(
     <Context.Provider value={{
         user: new UserStore(),
        products: new productStore(),
+        categories: new CategoriesStore(),
     }}>
         <App />
     </Context.Provider>,
