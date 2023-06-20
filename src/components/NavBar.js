@@ -49,7 +49,7 @@ const NavBar = observer(() => {
     }, [])
 
     return (
-        <div>
+        <div className='z-3'>
             <Navbar bg="dark" variant="dark" style={{height: '40px'}}>
                 <Container>
                     <Nav>

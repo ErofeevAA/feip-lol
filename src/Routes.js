@@ -14,7 +14,7 @@ export const publicRoutes = [
         Page: BasketPage
     },
     {
-        path: PRODUCT_ROUTE,
+        path: PRODUCT_ROUTE + '/:id',
         Page: CatalogPage
     },
     {

@@ -1,24 +1,24 @@
 import React, {useContext, useEffect} from 'react';
-import ProductStore from "../store/ProductStore";
-import ProductItem from "../components/ProductItem";
-import Container from "react-bootstrap/Container";
-import {getProducts} from "../http/productsAPI";
+import {getProductsByCategory} from "../http/productsAPI";
 import {Context} from "../index";
 import ProductsList from "../components/ProductsList";
+import {useLocation} from "react-router-dom";
 
 const CatalogPage = () => {
+    let location = useLocation();
+
     const {products} = useContext(Context)
+
+    console.log(location.state.categoryID)
 
 
     useEffect(() => {
-        getProducts().then(data => {
-            // console.log(data['data'])
+
+        getProductsByCategory(location.state.categoryID).then(data => {
             products.setProducts(data['data'])
-            // product.products.map(data => console.log(data.id))
         })
 
-
-    }, [])
+    }, [location.state.categoryID])
 
 
 
