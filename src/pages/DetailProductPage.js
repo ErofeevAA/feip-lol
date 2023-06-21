@@ -1,11 +1,13 @@
 
 import React, {useContext, useState} from "react";
-import {Image} from "react-bootstrap";
+import {Button, Image} from "react-bootstrap";
 import {Context} from "../index";
+import {SYMBOL_RUBLE} from "../utils/consts/StringConsts";
 
 const DetailProductPage = () => {
     const {detailProduct} = useContext(Context)
     const product = detailProduct.product;
+    console.log(product)
     const name = product.name
     const description = product.description;
 
@@ -16,15 +18,14 @@ const DetailProductPage = () => {
     const variation = product.productVariations;
     const keysVariation = Object.keys(variation);
     let img;
-    let chosenColor = Object.keys(variation[keysVariation[numChosen]])[numChosenColor];
-    let price = variation[keysVariation[numChosen]][chosenColor].price;
-
-    let variantColors = [];
+    let variantColors = Object.keys(variation[keysVariation[numChosen]]);
+    let chosenColor = variantColors[numChosenColor];
+    let price = variation[keysVariation[numChosen]][chosenColor][0].price;
 
     for (let i = 0; i < product.images.length; ++i) {
         if (product.images[i].color.name === chosenColor) {
             img = product.images[i].url;
-            console.log(img);
+            break;
         }
     }
 
@@ -37,18 +38,25 @@ const DetailProductPage = () => {
     let colorsWidget = [];
 
     for (let i = 0; i < Object.keys(variation[keysVariation[numChosen]]).length; ++i) {
-        const curCol = Object.keys(variation[keysVariation[numChosen]])[i];
+        let variantHexColor = ''
+        for (let j = 0; j < product.images.length; ++j) {
+            if (variantColors[i] === product.images[j].color.name) {
+                variantHexColor = product.images[j].color.hexCode;
+                break
+            }
+        }
+
         function choose(_) {
             numChosenColorState(i)
         }
-        colorsWidget.push(<ColorItem color={curCol.hex} onClick={choose} chosen={i === numChosenColor}/>);
+        colorsWidget.push(<ColorItem color={variantHexColor} onClick={choose} chosen={i === numChosenColor}/>);
     }
 
     return (
         <div className="d-flex justify-content-center align-items-center flex-wrap"
              style={{margin: 32}}>
             <Image
-            //src={}
+            src={`http://localhost:8080${img}`}
             width='464'
             height='612'
             />
@@ -72,7 +80,12 @@ const DetailProductPage = () => {
                 <div className="d-flex align-items-center">
                     {colorsWidget}
                 </div>
-
+                <div style={{height: 60}}/>
+                <div className="d-flex align-items-center">
+                    <div style={{color: "#515562", fontSize: 18, fontWeight: 700}}>{price} {SYMBOL_RUBLE}</div>
+                    <div style={{width: 60}}/>
+                    <Button variant={'secondary'}>В корзину</Button>
+                </div>
             </div>
         </div>
     );

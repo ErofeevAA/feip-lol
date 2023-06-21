@@ -16,10 +16,9 @@ const ProductItem = ({product}) => {
     const variation = product.productVariations;
     const keysVariation = Object.keys(variation);
     let img;
-    let price;
     let firstColor = Object.keys(variation[keysVariation[numChosen]])[0];
-    price = variation[keysVariation[numChosen]][firstColor].price;
-
+    let price = variation[keysVariation[numChosen]][firstColor][0].price;
+    console.log(variation[keysVariation[numChosen]][firstColor]);
     for (let i = 0; i < product.images.length; ++i) {
         console.log(product.images[i].color.name);
         console.log(firstColor);
@@ -36,6 +35,7 @@ const ProductItem = ({product}) => {
         sizeWidget.push(<SizeItem size={keysVariation[i]} onClick={choose} chosen={i === numChosen}/>);
     }
 
+    console.log(`http://localhost:8080${img}`);
     const name = product.name;
 
     function itemClick(_) {
@@ -45,7 +45,7 @@ const ProductItem = ({product}) => {
     let itemStyle = {zIndex: 0}
     let content = (
         <div className="d-flex flex-column p-3" style={{marginBottom: 95}}>
-            <div onClick={itemClick} style={{backgroundImage: `http://localhost:8080/${img})`, width: 288, height: 407}}/>
+            <div onClick={itemClick} style={{backgroundImage: `url(http://localhost:8080${img})`, backgroundSize: "cover", width: 288, height: 407}}/>
             <div style={{height: 16}}/>
             <div onClick={itemClick} style={{color: "#515562", fontSize: 16}}>{name}</div>
             <div style={{height: 24}}/>
@@ -61,7 +61,7 @@ const ProductItem = ({product}) => {
                      boxShadow: `0px 0px 20px -4px rgba(0, 0, 0, 0.2)`, background: '#fff'}}>
                 <div
                     onClick={itemClick}
-                    style={{cursor: 'pointer', backgroundImage: `url(http://localhost:8080/${img})`, width: 288, height: 407}}></div>
+                    style={{cursor: 'pointer', backgroundSize: "cover", backgroundImage: `url(http://localhost:8080${img})`, width: 288, height: 407}}></div>
                 <div style={{height: 16}}/>
                 <div
                     onClick={itemClick}
