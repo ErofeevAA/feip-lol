@@ -1,37 +1,51 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom"
-import {PRODUCT_ROUTE} from "../utils/consts/RoutesConst";
+import {PRODUCT_DETAIL_ROUTE} from "../utils/consts/RoutesConst";
 import {SYMBOL_RUBLE} from "../utils/consts/StringConsts";
-import basket_img from "../assets/basket.svg";
+import {Context} from "../index";
 
-const ProductItem = ({products}) => {
+const ProductItem = ({product}) => {
+    const {detailProduct} = useContext(Context)
     const navigate = useNavigate()
     const [over, overState] = useState(false)
 
-    const [numChosen, numChosenState] = useState(undefined)
+    const [numChosen, numChosenState] = useState(0)
 
     let sizeWidget = [];
-    const mock = ['XS', 'S', 'M'];
+    const variation = product.productVariations;
+    const keysVariation = Object.keys(variation);
+    let img;
+    let price;
+    let firstColor = Object.keys(variation[keysVariation[numChosen]])[0];
+    price = variation[keysVariation[numChosen]][firstColor].price;
 
-    for (let i = 0; i < mock.length; ++i) {
+    for (let i = 0; i < product.images.length; ++i) {
+        console.log(product.images[i].color.name);
+        console.log(firstColor);
+        if (product.images[i].color.name === firstColor) {
+            img = product.images[i].url;
+            console.log(img);
+        }
+    }
+
+    for (let i = 0; i < keysVariation.length; ++i) {
         function choose(_) {
             numChosenState(i)
         }
-        sizeWidget.push(<SizeItem size={mock[i]} onClick={choose} chosen={i === numChosen}/>);
+        sizeWidget.push(<SizeItem size={keysVariation[i]} onClick={choose} chosen={i === numChosen}/>);
     }
 
-    const name = products.name;
-
-    const price = 17200;
+    const name = product.name;
 
     function itemClick(_) {
-        navigate(PRODUCT_ROUTE + `/id`)
+        navigate(PRODUCT_DETAIL_ROUTE + `/${product.id}`)
+        detailProduct.setProduct(product)
     }
     let itemStyle = {zIndex: 0}
     let content = (
         <div className="d-flex flex-column p-3" style={{marginBottom: 95}}>
-            <div onClick={itemClick} style={{backgroundImage: `url(${basket_img})`, width: 288, height: 407}}/>
+            <div onClick={itemClick} style={{backgroundImage: `http://localhost:8080/${img})`, width: 288, height: 407}}/>
             <div style={{height: 16}}/>
             <div onClick={itemClick} style={{color: "#515562", fontSize: 16}}>{name}</div>
             <div style={{height: 24}}/>
@@ -47,7 +61,7 @@ const ProductItem = ({products}) => {
                      boxShadow: `0px 0px 20px -4px rgba(0, 0, 0, 0.2)`, background: '#fff'}}>
                 <div
                     onClick={itemClick}
-                    style={{cursor: 'pointer', backgroundImage: `url(${basket_img})`, width: 288, height: 407}}></div>
+                    style={{cursor: 'pointer', backgroundImage: `url(http://localhost:8080/${img})`, width: 288, height: 407}}></div>
                 <div style={{height: 16}}/>
                 <div
                     onClick={itemClick}

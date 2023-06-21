@@ -2,7 +2,7 @@ import React from 'react';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {Button, Container, Image, Nav, NavbarBrand, Dropdown} from "react-bootstrap";
-import {PRODUCT_ROUTE, SHOP_ROUTE} from "../utils/consts/RoutesConst";
+import {CATALOG_ROUTE, SHOP_ROUTE} from "../utils/consts/RoutesConst";
 import {NavLink} from "react-router-dom";
 
 import logoLight from '../assets/logo_light.svg'
@@ -39,7 +39,7 @@ const Footer = () => {
                             КАТАЛОГ
                         </NavbarBrand>
                         <Nav className='d-flex flex-column mt-3 align-items-start'>
-                            <NavLink to={PRODUCT_ROUTE} style={{color: "grey"}}>Одежда</NavLink>
+                            <NavLink to={CATALOG_ROUTE} style={{color: "grey"}}>Одежда</NavLink>
                             <NavLink to='/' style={{color: "grey"}}>Обувь</NavLink>
                             <NavLink to='/' style={{color: "grey"}}>Верхняя одежда</NavLink>
                             <NavLink to='/' style={{color: "grey"}}>Домашняя одежда</NavLink>

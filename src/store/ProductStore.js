@@ -1,18 +1,14 @@
-import {makeAutoObservable} from "mobx";
-
 class ProductStore {
-
     constructor(id, name) {
-        this._products = []
-        makeAutoObservable(this)
+        this._product = {}
     }
 
-    setProducts(products) {
-        this._products = products
+    setProduct(product) {
+        this._product = product
     }
 
-    get products() {
-        return this._products
+    get product() {
+        return this._product
     }
 }
 
