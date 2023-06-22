@@ -1,12 +1,27 @@
 import BasketItem from "../components/BasketItem";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import PlaceOrder from "../components/PlaceOrder";
 import InputFormWithTitle from "../components/InputFormWithTitle";
 import {delProduct, getProductInCart, putProductInCart} from "../http/cartAPI";
 import {generateUuid} from "../utils/GenerateUuid";
+import {useNavigate} from "react-router-dom";
+import {Context} from "../index";
+import {LOGIN_ROUTE} from "../utils/consts/RoutesConst";
+
+const BasketPageState = {
+    stateListProducts: 'Офомить заказ',
+    stateOffer: 'Отправить заявку',
+    stateSuccess: 'Заявка отправлена'
+}
 
 const BasketPage = () => {
+    const navigator = useNavigate()
     const [cart, setCart] = useState();
+    const [pageState, setPageState] = useState(BasketPageState.stateListProducts);
+    const [fields, setFields] = useState({
+        '': undefined,
+    })
+    const {user} = useContext(Context)
 
     let uuid = localStorage.getItem('uuid');
     if (uuid === null) {
@@ -29,7 +44,6 @@ const BasketPage = () => {
         </div>);
     }
 
-    console.log(cart);
     let items = []
 
     for (let i = 0; i < cart.products.length; ++i) {
@@ -84,16 +98,29 @@ const BasketPage = () => {
     }
     items.pop()
 
-    function onClickBeginOffer(e) {
+    function onClickBeginOffer(_) {
+        if (!user.isAuth) {
+            navigator(LOGIN_ROUTE)
+            return;
+        }
 
+        if (pageState === BasketPageState.stateListProducts) {
+            setPageState(BasketPageState.stateOffer)
+        } else if(pageState === BasketPageState.stateOffer) {
+
+        } else {
+
+        }
     }
 
     return (
         <div className="d-flex justify-content-center flex-wrap"
              style={{background: "#F7F7FC", paddingTop: 32, paddingBottom: 32, margin: 32}}>
-            <BasketBlockItems items={items}/>
+            {pageState === BasketPageState.stateListProducts && <BasketBlockItems items={items}/>}
+            {pageState === BasketPageState.stateOffer && <MakeOrder items={items}/>}
+            {pageState === BasketPageState.stateSuccess && <SuccessBlock/>}
             <div style={{width: 100}}></div>
-            <PlaceOrder onClick={onClickBeginOffer} sum={cart.orderSum} buttonText="Офомить заказ" count={cart.productsCount}/>
+            <PlaceOrder onClick={onClickBeginOffer} sum={cart.orderSum} buttonText={pageState} count={cart.productsCount}/>
         </div>
     );
 }
@@ -121,6 +148,15 @@ const MakeOrder = () => {
                 <div style={{width: 16}}/>
                 <InputFormWithTitle title="Населённый пункт"/>
             </div>
+        </div>
+    );
+}
+
+const SuccessBlock = () => {
+    return (
+        <div className="d-flex justify-content-center align-items-center"
+             style={{background: "#F7F7FC", paddingTop: 32, paddingBottom: 32, margin: 32}}>
+            Заявка успешно отправлена!
         </div>
     );
 }

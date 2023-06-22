@@ -135,26 +135,26 @@ const NavBar = observer(() => {
 
                     {user.isAuth ?
                         <Nav className="ml-auto d-flex align-items-center" style={{color: 'white'}}>
-                            <NavLink to='/' className='d-flex align-items-center' style={{color: "grey"}}>
-                                <Image
-                                    src={favourite}
-                                    width="24"
-                                    height="22.3"
-                                    className="d-inline-block mx-1"
-                                    alt="instagram"
-                                />
-                                Избранное
-                            </NavLink>
-                            <NavLink to={ADMIN_ROUTE} className='mx-3 d-flex align-items-center' style={{color: "grey"}}>
-                                <Image
-                                    src={userIcon}
-                                    width="24"
-                                    height="22.3"
-                                    className="d-inline-block mx-1"
-                                    alt="instagram"
-                                />
-                                Админ панель
-                            </NavLink>
+                            {/*<NavLink to='/' className='d-flex align-items-center' style={{color: "grey"}}>*/}
+                            {/*    <Image*/}
+                            {/*        src={favourite}*/}
+                            {/*        width="24"*/}
+                            {/*        height="22.3"*/}
+                            {/*        className="d-inline-block mx-1"*/}
+                            {/*        alt="instagram"*/}
+                            {/*    />*/}
+                            {/*    Избранное*/}
+                            {/*</NavLink>*/}
+                            {/*<NavLink to={ADMIN_ROUTE} className='mx-3 d-flex align-items-center' style={{color: "grey"}}>*/}
+                            {/*    <Image*/}
+                            {/*        src={userIcon}*/}
+                            {/*        width="24"*/}
+                            {/*        height="22.3"*/}
+                            {/*        className="d-inline-block mx-1"*/}
+                            {/*        alt="instagram"*/}
+                            {/*    />*/}
+                            {/*    Админ панель*/}
+                            {/*</NavLink>*/}
                             <NavLink to={BASKET_ROUTE} className='d-flex align-items-center' style={{color: "grey"}}>
                                 <Image
                                     src={basket}
@@ -165,10 +165,11 @@ const NavBar = observer(() => {
                                 />
                                 Корзина
                             </NavLink>
+                            <div style={{width:10}}/>
                             <Button
                                 variant={"danger"}
                                 onClick={() => logOut()}
-                                className="ml-2"
+                                className="my-2"
                             >
                                 Выйти
                             </Button>

@@ -2,11 +2,23 @@ import {$authHost, $host} from "./index";
 import jwt_decode from "jwt-decode";
 import {LOGIN_ROUTE} from "../utils/consts/RoutesConst";
 
-/// TODO Регистрацию надо переписать
-export const registration = async (email, password) => {
-    const {data} = await $host.post('api/user/registration', {email, password, role: 'ADMIN'})
-    localStorage.setItem('token', data.token)
-    return jwt_decode(data.token)
+export const registration = async (phone, password) => {
+    console.log(phone);
+    console.log(password)
+    const {data} = await $host.post('auth/register', {
+        'phone': phone,
+        'password': password
+    })
+    console.log(data)
+    return data
+}
+
+export const activate = async (phone, code) => {
+    const {data} = await $host.post('auth/activate', {
+        'phone': phone,
+        'code': code,
+    })
+    return data
 }
 
 export const login = async (email, password) => {

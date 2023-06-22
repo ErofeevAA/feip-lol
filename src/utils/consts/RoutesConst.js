@@ -6,4 +6,6 @@ export const CATALOG_ROUTE = '/catalog'
 
 export const PRODUCT_DETAIL_ROUTE = '/product'
 
-export const REGISTRATION_ROUTE = 'registration'
+export const REGISTRATION_ROUTE = '/registration'
+
+export const ACTIVATE_ROUTE = "/activate"
