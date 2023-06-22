@@ -14,16 +14,24 @@ const App = observer(() => {
     const {user} = useContext(Context)
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        refresh().then(data => {
-            user.setUser(true)
-            user.setIsAuth(true)
-        }).finally(() => setLoading(false))
-    }, [])
+    /*useEffect(() => {
+        refresh()
+            .then(data => {
+                user.setUser(true)
+                user.setIsAuth(true)
+            })
+            .catch(data => {
+                user.setUser(false)
+                user.setIsAuth(false)
+            })
+            .finally(() => setLoading(false))
 
-    if (loading) {
+        console.log(user)
+    }, [])*/
+
+    /*if (loading) {
         return <Spinner animation={"grow"}/>
-    }
+    }*/
 
     return (
         <BrowserRouter>
