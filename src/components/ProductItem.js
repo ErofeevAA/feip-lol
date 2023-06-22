@@ -4,6 +4,8 @@ import {useNavigate} from "react-router-dom"
 import {PRODUCT_DETAIL_ROUTE} from "../utils/consts/RoutesConst";
 import {SYMBOL_RUBLE} from "../utils/consts/StringConsts";
 import {Context} from "../index";
+import {generateUuid} from "../utils/GenerateUuid";
+import {putProductInCart} from "../http/cartAPI";
 
 const ProductItem = ({product}) => {
     const {detailProduct} = useContext(Context)
@@ -18,14 +20,21 @@ const ProductItem = ({product}) => {
     let img;
     let firstColor = Object.keys(variation[keysVariation[numChosen]])[0];
     let price = variation[keysVariation[numChosen]][firstColor][0].price;
-    console.log(variation[keysVariation[numChosen]][firstColor]);
+    let sku = variation[keysVariation[numChosen]][firstColor][0].sku;
+
     for (let i = 0; i < product.images.length; ++i) {
-        console.log(product.images[i].color.name);
-        console.log(firstColor);
         if (product.images[i].color.name === firstColor) {
             img = product.images[i].url;
-            console.log(img);
         }
+    }
+
+    function inCart(_) {
+        let uuid = localStorage.getItem('uuid');
+        if (uuid === 'null') {
+            uuid = generateUuid();
+            localStorage.setItem('uuid', uuid)
+        }
+        putProductInCart(uuid, `${sku}`, `${1}`);
     }
 
     for (let i = 0; i < keysVariation.length; ++i) {
@@ -35,7 +44,6 @@ const ProductItem = ({product}) => {
         sizeWidget.push(<SizeItem size={keysVariation[i]} onClick={choose} chosen={i === numChosen}/>);
     }
 
-    console.log(`http://localhost:8080${img}`);
     const name = product.name;
 
     function itemClick(_) {
@@ -76,7 +84,7 @@ const ProductItem = ({product}) => {
                     {sizeWidget}
                 </div>
                 <div style={{height: 10}}/>
-                <Button variant={'secondary'}>В корзину</Button>
+                <Button variant={'secondary'} onClick={inCart}>В корзину</Button>
             </div>
         )
     }

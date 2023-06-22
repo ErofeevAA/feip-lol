@@ -3,8 +3,8 @@ import {Context} from "../index";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import {NavLink} from "react-router-dom";
-import {ADMIN_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, SHOP_ROUTE} from "../utils/consts/RoutesConst";
-import {Button, Dropdown, Image, NavbarBrand} from "react-bootstrap";
+import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/consts/RoutesConst";
+import {Button, Dropdown, Image} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import Container from "react-bootstrap/Container";
 // import {useNavigate} from 'react-router-dom'
@@ -16,11 +16,8 @@ import favourite from '../assets/favourite.svg'
 import userIcon from '../assets/user.svg'
 import basket from '../assets/basket.svg'
 import Basket from "./Basket";
-import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {getProducts} from "../http/productsAPI";
 import {getCategories} from "../http/CategoriesAPI";
-import ProductItem from "./ProductItem";
 import CategoriesItem from "./CategoriesItem";
 
 const NavBar = observer(() => {
@@ -157,7 +154,7 @@ const NavBar = observer(() => {
                                 />
                                 Админ панель
                             </NavLink>
-                            <NavLink to='/' className='d-flex align-items-center' style={{color: "grey"}}>
+                            <NavLink to={BASKET_ROUTE} className='d-flex align-items-center' style={{color: "grey"}}>
                                 <Image
                                     src={basket}
                                     width="24"

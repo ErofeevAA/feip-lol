@@ -3,6 +3,8 @@ import React, {useContext, useState} from "react";
 import {Button, Image} from "react-bootstrap";
 import {Context} from "../index";
 import {SYMBOL_RUBLE} from "../utils/consts/StringConsts";
+import {putProductInCart} from "../http/cartAPI";
+import {generateUuid} from "../utils/GenerateUuid";
 
 const DetailProductPage = () => {
     const {detailProduct} = useContext(Context)
@@ -21,6 +23,7 @@ const DetailProductPage = () => {
     let variantColors = Object.keys(variation[keysVariation[numChosen]]);
     let chosenColor = variantColors[numChosenColor];
     let price = variation[keysVariation[numChosen]][chosenColor][0].price;
+    let sku = variation[keysVariation[numChosen]][chosenColor][0].sku;
 
     for (let i = 0; i < product.images.length; ++i) {
         if (product.images[i].color.name === chosenColor) {
@@ -50,6 +53,15 @@ const DetailProductPage = () => {
             numChosenColorState(i)
         }
         colorsWidget.push(<ColorItem color={variantHexColor} onClick={choose} chosen={i === numChosenColor}/>);
+    }
+
+    function inCart(_) {
+        let uuid = localStorage.getItem('uuid');
+        if (uuid === null) {
+            uuid = generateUuid();
+            localStorage.setItem('uuid', uuid)
+        }
+        putProductInCart(uuid, `${sku}`, `${1}`);
     }
 
     return (
@@ -84,7 +96,7 @@ const DetailProductPage = () => {
                 <div className="d-flex align-items-center">
                     <div style={{color: "#515562", fontSize: 18, fontWeight: 700}}>{price} {SYMBOL_RUBLE}</div>
                     <div style={{width: 60}}/>
-                    <Button variant={'secondary'}>В корзину</Button>
+                    <Button variant={'secondary'} onClick={inCart}>В корзину</Button>
                 </div>
             </div>
         </div>

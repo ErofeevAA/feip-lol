@@ -2,7 +2,7 @@ import {SYMBOL_RUBLE} from "../utils/consts/StringConsts";
 import React from "react";
 import {Button} from "react-bootstrap";
 
-const PlaceOrder = () => {
+const PlaceOrder = ({onClick, sum, count, buttonText}) => {
     return(
         <div className="d-flex flex-column"
              style={{width: 207, height: 235, background: "#ffffff", paddingTop: 32}}>
@@ -11,11 +11,11 @@ const PlaceOrder = () => {
                 <div style={{marginTop: 16, background:"#CDCFD6", height: 1}}/>
                 <div className="d-flex justify-content-between" style={{marginTop: 16, fontSize: 12}}>
                     <div style={{color: "#616575"}}>Кол-во товаров:</div>
-                    <div style={{color: "#323540"}}>4 шт</div>
+                    <div style={{color: "#323540"}}>{count} шт</div>
                 </div>
                 <div className="d-flex justify-content-between" style={{marginTop: 7, fontSize: 12}}>
                     <div style={{color: "#616575"}}>Сумма:</div>
-                    <div style={{color: "#323540"}}>24000 {SYMBOL_RUBLE}</div>
+                    <div style={{color: "#323540"}}>{sum} {SYMBOL_RUBLE}</div>
                 </div>
                 <div style={{marginTop: 16, background:"#CDCFD6", height: 1}}/>
             </div>
@@ -23,10 +23,10 @@ const PlaceOrder = () => {
                  fontSize: 14, fontWeight: 700, color: "#323540"
             }}>
                 <div>Итого:</div>
-                <div>24 000 {SYMBOL_RUBLE}</div>
+                <div>{sum} {SYMBOL_RUBLE}</div>
             </div>
-            <Button variant={'secondary'}>
-                Оформить заказ
+            <Button variant={'secondary'} onClick={onClick}>
+                {buttonText}
             </Button>
         </div>
     );
