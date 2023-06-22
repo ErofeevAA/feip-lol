@@ -30,7 +30,6 @@ export const refreshTokens = async () => {
         }
         // Обработка ошибки обновления токенов
         console.error('Ошибка обновления токенов:', error);
-        throw error;
     }
 };
 
@@ -52,12 +51,10 @@ $authHost.interceptors.request.use(async (config) => {
             } catch (error) {
                 window.location.href = LOGIN_ROUTE
                 console.error('Ошибка обновления токенов:', error);
-                throw error;
             }
         } else {
             window.location.href = LOGIN_ROUTE
             console.error('Ошибка запроса:', error);
-            throw error;
         }
     }
 });
